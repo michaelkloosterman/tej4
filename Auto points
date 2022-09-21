@@ -1,0 +1,121 @@
+gifdir = "./"
+import tkinter
+from tkinter import ttk
+from tkinter import *
+import time
+windows = tkinter.Tk()
+count = 0
+automatic = 0
+ClickUp = 0
+CostA = 15
+CostC = 10
+current_tick = 0
+obj = time.gmtime(0)
+epoch = time.asctime(obj)
+curr_time = round(time.time()*1000)
+tick = 0
+sec = 0
+#igm = PhotoImage(file=gifdir+"Pickaxe1.gif")
+if True:
+  obj = time.gmtime(0)
+  epoch = time.asctime(obj)
+  curr_time = round(time.time()*1000)
+  goal_time = curr_time + 35
+  goal_time_sec = curr_time + 1000
+
+def clicked(event):
+  global count
+  count = count + 1 + round(ClickUp)
+  label.configure(text=f'Points: {round(count)}')
+
+def upgradeA(event):
+  global automatic
+  global count
+  global CostA
+  if count >= CostA:
+    automatic = automatic + 1
+    count = count - CostA
+    CostA = CostA + (2*CostA/3)
+    label.configure(text=f'Points: {round(count)}')
+    AutoUP.config(text=f"Auto Collector: + 1 per second     Price: {round(CostA)}")
+  else:
+    label.configure(text=f'Upgrade too expensive')
+    label.configure(text=f'Points: {round(count)}')
+ 
+def auto():
+  global automatic
+  global count
+  count = count + automatic
+  
+def timemanager(time_type):
+  global tick
+  global sec
+ 
+  global goal_time
+  global goal_time_sec
+  curr_time = round(time.time()*1000)
+  if goal_time_sec <= curr_time and time_type == "second":
+    sec = sec + 1
+    goal_time_sec = curr_time + 1000
+    return True
+  elif time_type == "second":
+    return False
+ 
+  if goal_time <= curr_time:
+    tick = tick + 1
+    goal_time = curr_time + (100/6)
+    return True
+  else:
+    return False
+ 
+def system():
+  if timemanager("tick") == True:
+    x =1
+
+  if timemanager("second") == True:
+    auto()
+    label.configure(text=f'Points: {round(count)}')
+                
+def upgradeC(event):
+  global count
+  global ClickUp
+  global CostC
+  if count >= CostC:
+    ClickUp = ClickUp + 1
+    count = count - round(CostC)
+    CostC = CostC + (2*CostC/3)
+    label.configure(text=f'Points: {round(count)}')
+    ClickUP.config(text=f"Upgrade Clicks: + 1 per click     Price: {round(CostC)}")
+  else:
+    label.configure(text=f'Upgrade too expensive')
+    label.configure(text=f'Points: {round(count)}')
+
+windows.title("Idle Game")
+label = tkinter.Label(windows)
+label.grid(column=0, row=0)
+label.configure(text=f'Points: {round(count)}')
+label1 = tkinter.Label(windows)
+label1.grid(column=2, row=0)
+label2 = tkinter.Label(windows)
+label2.grid(column=0, row=2)
+label2.configure(text=f'Auto Upgrades')
+label3 = tkinter.Label(windows)
+label3.grid(column=0, row=3)
+label3.configure(text=f'Click Upgrades')
+button = tkinter.ttk.Button(windows, text="Click on me")
+button.bind("<Button-1>", clicked)
+button.grid(column=0, row=1)
+AutoUP = tkinter.ttk.Button(windows, text=f'Auto Collector: + 1 per second     Price: {round(CostA)}')
+AutoUP.bind("<Button-1>", upgradeA)
+AutoUP.grid(column=1, row=2)
+ClickUP = tkinter.ttk.Button(windows, text=f'Upgrade Clicks: + 1 per click     Price: {round(CostC)}')
+ClickUP.bind("<Button-1>", upgradeC)
+ClickUP.grid(column=1, row=3)
+#Button(windows, image=igm).pack()
+#Button = button
+#button.grid(column=0, row=5)
+
+while True:
+  system()
+  windows.update_idletasks()
+  windows.update()
