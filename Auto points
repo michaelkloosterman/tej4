@@ -26,7 +26,6 @@ epoch = time.asctime(obj)
 curr_time = round(time.time()*1000)
 tick = 0
 sec = 0
-#igm = PhotoImage(file=gifdir+"Pickaxe1.gif")
 if True:
   obj = time.gmtime(0)
   epoch = time.asctime(obj)
@@ -147,7 +146,6 @@ def clickpower(event):
     ClickUpgrade.config(text=f"Double Click Power:     Price: {(CostCUp)}")
     updatelabel()
     
-
 def updatelabel():
   global Ppc
   global Pps
@@ -158,8 +156,6 @@ def updatelabel():
   label5.configure(text=f'{Pps} per second')
   label6.configure(text=f'Click Multipliers')
   
-
-
 windows.title("Idle Game")
 label = tkinter.Label(windows)
 label.grid(column=0, row=0)
@@ -190,10 +186,6 @@ ClickUP.grid(column=1, row=2)
 ClickUpgrade = tkinter.ttk.Button(windows, text=f'Double Click Power:     Price: {(CostCUp)}')
 ClickUpgrade.bind("<Button-1>", clickpower)
 ClickUpgrade.grid(column=1, row=5)
-
-#Button(windows, image=igm).pack()
-#Button = button
-#button.grid(column=0, row=5)
 
 while True:
   system()
