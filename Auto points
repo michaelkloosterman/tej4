@@ -19,6 +19,7 @@ CUp = 1
 CostCUp = 100
 Ppc = 1
 Ppc2 = 1
+Ppc3 = 1
 Pps = 0
 current_tick = 0
 obj = time.gmtime(0)
@@ -37,7 +38,8 @@ def clicked(event):
   global count
   global ClickUp
   global ClickP
-  count = count + Ppc
+  global Ppc3
+  count = count + Ppc3
   label.configure(text=f'Points: {round(count)}')
 
 def upgradeA(event):
@@ -80,11 +82,13 @@ def upgradeC(event):
   global CostC
   global Ppc
   global Ppc2
+  global Ppc3
   global CUp
   if count >= CostC:
     ClickP = ClickP + ClickUp
     ClickUp = ClickP * CUp
-    Ppc = (Ppc + 1) * Ppc2
+    Ppc = Ppc + 1
+    Ppc3 = Ppc * Ppc2 
     count = count - round(CostC)
     CostC = CostC + (2*CostC/3)
     label.configure(text=f'Points: {round(count)}')
@@ -121,38 +125,39 @@ def timemanager(time_type):
  
 def system():
   if timemanager("tick") == True:
-    x =1
-
-  if timemanager("second") == True:
-    auto()
     label.configure(text=f'Points: {round(count)}')
     updatelabel()
     label5.configure(text=f'{Pps} per second')
+
+  if timemanager("second") == True:
+    auto()
+    
                 
 def clickpower(event):
   global count
   global CUp
   global CostCUp
-  global Ppc2
   global Ppc
+  global Ppc2
+  global Ppc3
   if count >= CostCUp:
     CUp = CUp + CUp
     count = count - CostCUp
     CostCUp = 5*CostCUp
     Ppc = Ppc * Ppc2
     Ppc2 = Ppc2 + Ppc2
-    label.configure(text=f'Points: {round(count)}')
     ClickUP.config(text=f"Upgrade Clicks: + {CUp} per click     Price: {round(CostC)}")
     ClickUpgrade.config(text=f"Double Click Power:     Price: {(CostCUp)}")
     updatelabel()
     
 def updatelabel():
-  global Ppc
+  global Ppc3
   global Pps
+  global count
   label.configure(text=f'Points: {round(count)}')
   label2.configure(text=f'Click Upgrades')
   label3.configure(text=f'Auto Upgrades')
-  label4.configure(text=f'{Ppc} per click')
+  label4.configure(text=f'{Ppc3} per click')
   label5.configure(text=f'{Pps} per second')
   label6.configure(text=f'Click Multipliers')
   
