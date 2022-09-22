@@ -161,6 +161,9 @@ def updatelabel():
   label5.configure(text=f'{Pps} per second')
   label6.configure(text=f'Click Multipliers')
   
+##my name jeff
+#he be lying
+
 windows.title("Idle Game")
 label = tkinter.Label(windows)
 label.grid(column=0, row=0)
