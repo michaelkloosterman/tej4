@@ -159,6 +159,7 @@ def updatelabel():
   label6.configure(text=f'Click Multipliers')
   
 ##my name jeff
+#he be lying
 
 windows.title("Idle Game")
 label = tkinter.Label(windows)
