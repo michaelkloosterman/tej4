@@ -11,7 +11,6 @@ ClickP = 1
 CostA = 15
 AUp = 1
 CostAUp = 100
-CostA2 = 100
 CostA2Up = 1000
 A2Up = 5
 CostC = 10
@@ -160,7 +159,7 @@ def updatelabel():
   label5.configure(text=f'{Pps} per second')
   label6.configure(text=f'Click Multipliers')
   
-
+#Reigon:
 windows.title("Idle Game")
 label = tkinter.Label(windows)
 label.grid(column=0, row=0)
