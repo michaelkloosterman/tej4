@@ -6,6 +6,7 @@ import time
 windows = tkinter.Tk()
 count = 0
 automatic = 0
+automatic2 = 0
 ClickUp = 0 #Times upgraded (Ppc)
 ClickP = 1 #
 CostA = 15 #Cost of Auto Collecter
@@ -21,6 +22,8 @@ Ppc = 1 #Base amount (Clicks)
 Ppc2 = 1 #Multiplier (Clicks)
 Pps = 0 #Base Amount (Auto)
 Pps2 = 1 #Multiplier (Auto)
+P2ps = 0 #Base amount (Advanced)
+P2ps2 = 1 #Multiplier (Advanced)
 current_tick = 0
 obj = time.gmtime(0)
 epoch = time.asctime(obj)
@@ -63,14 +66,16 @@ def upgradeA2(event):
   global count
   global CostA2
   global Pps
+  global Pps2
+  global P2ps
+  global P2ps2
   if count >= CostA2:
     automatic = automatic + 5
-    Pps = Pps + 5
+    P2ps = P2ps + 5
     count = count - CostA2
     CostA2 = CostA2 + (2*CostA2/3)
     label.configure(text=f'Points: {round(count)}')
-    AutoUPUP.config(text=f"Advanced Collector: + {A2Up} per second     Price: {round(CostA2)}")
-    label5.configure(text=f'{Pps} per second')
+    AdvancedUP.config(text=f"Advanced Collector: + {A2Up} per second     Price: {round(CostA2)}")
   else:
     label.configure(text=f'Upgrade too expensive')
     label.configure(text=f'Points: {round(count)}')
@@ -97,7 +102,7 @@ def upgradeC(event):
 def auto():
   global automatic
   global count
-  count = count + (automatic * Pps2)
+  count = count + (automatic * Pps2) + (automatic2 *P2ps2)
 
 def timemanager(time_type):
   global tick
@@ -152,13 +157,28 @@ def autopower(event):
   global Pps2
   if count >= CostAUp:
     AUp = AUp + AUp
-    count - count - CostAUp
+    count = count - CostAUp
     CostAUp = 5*CostAUp
     Pps2 = Pps2*2
     AutoUP.config(text=f"Auto Collector: + {AUp} per second     Price: {round(CostA)}")
     AutoUpgrade.config(text=f"Double Auto Collecter:     Price: {(CostAUp)}")
-    label5.configure(text=f'{Pps + Pps2} per second')
     updatelabel()
+
+def advancedpower(event):
+  global count
+  global A2Up
+  global CostA2Up
+  global P2ps
+  global P2ps2
+  if count >= CostA2Up:
+    A2Up = A2Up + A2Up
+    count = count - CostA2Up
+    CostA2Up = 5*CostA2Up
+    P2ps2 = P2ps2*2
+    AdvancedUP.config(text=f"Advanced Collector: + {A2Up} per second     Price: {round(CostA2)}")
+    AutoUpgrade.config(text=f"Double Advanced Collecter:     Price: {(CostA2Up)}")
+    updatelabel()
+
 
 def updatelabel():
   global Ppc
@@ -170,7 +190,7 @@ def updatelabel():
   label2.configure(text=f'Click Upgrades')
   label3.configure(text=f'Auto Upgrades')
   label4.configure(text=f'{Ppc * Ppc2} per click')
-  label5.configure(text=f'{Pps * Pps2} per second')
+  label5.configure(text=f'{Pps * Pps2 + P2ps * P2ps2} per second')
   label6.configure(text=f'Multipliers')
 
 windows.title("Idle Game")
@@ -191,21 +211,24 @@ label6.grid(column=0, row=5)
 button = tkinter.ttk.Button(windows, text="Click on me")
 button.bind("<Button-1>", clicked)
 button.grid(column=0, row=1)
-AutoUP = tkinter.ttk.Button(windows, text=f'Auto Collector: + {AUp} per second     Price: {round(CostA)}')
-AutoUP.bind("<Button-1>", upgradeA)
-AutoUP.grid(column=1, row=3)
-AutoUPUP = tkinter.ttk.Button(windows, text=f'Adavnced Collector: + {A2Up} per second     Price: {round(CostA2)}')
-AutoUPUP.bind("<Button-1>", upgradeA2)
-AutoUPUP.grid(column=1, row=4)
 ClickUP = tkinter.ttk.Button(windows, text=f'Upgrade Clicks: + {CUp} per click     Price: {round(CostC)}')
 ClickUP.bind("<Button-1>", upgradeC)
 ClickUP.grid(column=1, row=2)
+AutoUP = tkinter.ttk.Button(windows, text=f'Auto Collector: + {AUp} per second     Price: {round(CostA)}')
+AutoUP.bind("<Button-1>", upgradeA)
+AutoUP.grid(column=1, row=3)
+AdvancedUP = tkinter.ttk.Button(windows, text=f'Adavnced Collector: + {A2Up} per second     Price: {round(CostA2)}')
+AdvancedUP.bind("<Button-1>", upgradeA2)
+AdvancedUP.grid(column=1, row=4)
 ClickUpgrade = tkinter.ttk.Button(windows, text=f'Double Click Power:     Price: {(CostCUp)}')
 ClickUpgrade.bind("<Button-1>", clickpower)
 ClickUpgrade.grid(column=1, row=5)
 AutoUpgrade = tkinter.ttk.Button(windows, text=f'Double Auto Collector:     Price: {(CostAUp)}')
 AutoUpgrade.bind("<Button-1>", autopower)
 AutoUpgrade.grid(column=1, row=6)
+AdvancedUpgrade = tkinter.ttk.Button(windows, text=f'Double Advanced Collector:     Price: {(CostA2Up)}')
+AdvancedUpgrade.bind("<Button-1>", advancedpower)
+AdvancedUpgrade.grid(column=1, row=7)
 
 while True:
   system()
