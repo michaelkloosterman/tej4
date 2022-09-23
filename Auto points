@@ -9,17 +9,18 @@ automatic = 0
 ClickUp = 0 #Times upgraded (Ppc)
 ClickP = 1 #
 CostA = 15 #Cost of Auto Collecter
+CostA2 = 100 #Cost of Advanced Collecter
 AUp = 1 #Multipler (Auto Collecter)
 A2Up = 5 #Multiplier (Advanced Collecter)
-CostAUp = 100 #Cost of Auto Colecter Multiplier
-CostA2 = 100 #Cost of Advanced Collecter Multiplier
-CostA2Up = 1000 #Cost of 
+CostAUp = 150 #Cost of Auto Colecter Multiplier
+CostA2Up = 1000 #Cost of Advanced Collecter Multiplier
 CostC = 10 #Cost of Upgrade Clicks
 CUp = 1 #Times Upgraded
 CostCUp = 100 #Cost of Click Multiplier
-Ppc = 1 #Base amount
-Ppc2 = 1 #Multiplier
-Pps = 0 #Base Amount
+Ppc = 1 #Base amount (Clicks)
+Ppc2 = 1 #Multiplier (Clicks)
+Pps = 0 #Base Amount (Auto)
+Pps2 = 1 #Multiplier (Auto)
 current_tick = 0
 obj = time.gmtime(0)
 epoch = time.asctime(obj)
@@ -88,16 +89,15 @@ def upgradeC(event):
     Ppc = Ppc + 1
     count = count - round(CostC)
     CostC = CostC + (2*CostC/3)
-    label.configure(text=f'Points: {round(count)}')
+    ##label.configure(text=f'Points: {round(count)}')
     ClickUP.config(text=f"Upgrade Clicks: + {CUp} per click     Price: {round(CostC)}")
   else:
-    label.configure(text=f'Upgrade too expensive')
-    label.configure(text=f'Points: {round(count)}') 
+    label.configure(text=f'Upgrade too expensive') 
 
 def auto():
   global automatic
   global count
-  count = count + automatic
+  count = count + (automatic * Pps2)
 
 def timemanager(time_type):
   global tick
@@ -111,8 +111,7 @@ def timemanager(time_type):
     return True
   elif time_type == "second":
     return False
- 
-  if goal_time <= curr_time:
+  if goal_time <= curr_time and time_type == "tick":
     tick = tick + 1
     goal_time = curr_time + (100/6)
     return True
@@ -122,6 +121,9 @@ def timemanager(time_type):
 def system():
   if timemanager("tick") == True:
     updatelabel()
+    ##label.configure(text=f'Points: {round(count)}')
+    updatelabel()
+    ##label5.configure(text=f'{Pps} per second')
 
   if timemanager("second") == True:
     auto()
@@ -136,23 +138,40 @@ def clickpower(event):
     CUp = CUp + CUp
     count = count - CostCUp
     CostCUp = 5*CostCUp
-    Ppc2 = Ppc2 + Ppc2 
+    Ppc2 = Ppc2*2 
     ClickUP.config(text=f"Upgrade Clicks: + {CUp} per click     Price: {round(CostC)}")
     ClickUpgrade.config(text=f"Double Click Power:     Price: {(CostCUp)}")
     label4.configure(text=f"{Ppc * Ppc2} per click")
     updatelabel()
-    
+
+def autopower(event):
+  global count
+  global AUp
+  global CostAUp
+  global Pps
+  global Pps2
+  if count >= CostAUp:
+    AUp = AUp + AUp
+    count - count - CostAUp
+    CostAUp = 5*CostAUp
+    Pps2 = Pps2*2
+    AutoUP.config(text=f"Auto Collector: + {AUp} per second     Price: {round(CostA)}")
+    AutoUpgrade.config(text=f"Double Auto Collecter:     Price: {(CostAUp)}")
+    label5.configure(text=f'{Pps + Pps2} per second')
+    updatelabel()
+
 def updatelabel():
   global Ppc
   global Ppc2
   global Pps
+  global CUp
   global count
   label.configure(text=f'Points: {round(count)}')
   label2.configure(text=f'Click Upgrades')
   label3.configure(text=f'Auto Upgrades')
   label4.configure(text=f'{Ppc * Ppc2} per click')
-  label5.configure(text=f'{Pps} per second')
-  label6.configure(text=f'Click Multipliers')
+  label5.configure(text=f'{Pps * Pps2} per second')
+  label6.configure(text=f'Multipliers')
 
 windows.title("Idle Game")
 label = tkinter.Label(windows)
@@ -184,6 +203,9 @@ ClickUP.grid(column=1, row=2)
 ClickUpgrade = tkinter.ttk.Button(windows, text=f'Double Click Power:     Price: {(CostCUp)}')
 ClickUpgrade.bind("<Button-1>", clickpower)
 ClickUpgrade.grid(column=1, row=5)
+AutoUpgrade = tkinter.ttk.Button(windows, text=f'Double Auto Collector:     Price: {(CostAUp)}')
+AutoUpgrade.bind("<Button-1>", autopower)
+AutoUpgrade.grid(column=1, row=6)
 
 while True:
   system()
