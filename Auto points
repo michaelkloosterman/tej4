@@ -6,21 +6,20 @@ import time
 windows = tkinter.Tk()
 count = 0
 automatic = 0
-ClickUp = 0
-ClickP = 1
-CostA = 15
-AUp = 1
-CostAUp = 100
-CostA2 = 100
-CostA2Up = 1000
-A2Up = 5
-CostC = 10
-CUp = 1
-CostCUp = 100
-Ppc = 1
-Ppc2 = 1
-Ppc3 = 1
-Pps = 0
+ClickUp = 0 #Times upgraded (Ppc)
+ClickP = 1 #
+CostA = 15 #Cost of Auto Collecter
+AUp = 1 #Multipler (Auto Collecter)
+A2Up = 5 #Multiplier (Advanced Collecter)
+CostAUp = 100 #Cost of Auto Colecter Multiplier
+CostA2 = 100 #Cost of Advanced Collecter Multiplier
+CostA2Up = 1000 #Cost of 
+CostC = 10 #Cost of Upgrade Clicks
+CUp = 1 #Times Upgraded
+CostCUp = 100 #Cost of Click Multiplier
+Ppc = 1 #Base amount
+Ppc2 = 1 #Multiplier
+Pps = 0 #Base Amount
 current_tick = 0
 obj = time.gmtime(0)
 epoch = time.asctime(obj)
@@ -37,9 +36,9 @@ if True:
 def clicked(event):
   global count
   global ClickUp
-  global ClickP
-  global Ppc3
-  count = count + Ppc3
+  global Ppc2
+  global Ppc
+  count = count + Ppc * Ppc2
   label.configure(text=f'Points: {round(count)}')
 
 def upgradeA(event):
@@ -82,13 +81,11 @@ def upgradeC(event):
   global CostC
   global Ppc
   global Ppc2
-  global Ppc3
   global CUp
   if count >= CostC:
     ClickP = ClickP + ClickUp
     ClickUp = ClickP * CUp
     Ppc = Ppc + 1
-    Ppc3 = Ppc * Ppc2 
     count = count - round(CostC)
     CostC = CostC + (2*CostC/3)
     label.configure(text=f'Points: {round(count)}')
@@ -105,7 +102,6 @@ def auto():
 def timemanager(time_type):
   global tick
   global sec
- 
   global goal_time
   global goal_time_sec
   curr_time = round(time.time()*1000)
@@ -125,44 +121,38 @@ def timemanager(time_type):
  
 def system():
   if timemanager("tick") == True:
-    label.configure(text=f'Points: {round(count)}')
     updatelabel()
-    label5.configure(text=f'{Pps} per second')
 
   if timemanager("second") == True:
     auto()
-    
-                
+                 
 def clickpower(event):
   global count
   global CUp
   global CostCUp
   global Ppc
   global Ppc2
-  global Ppc3
   if count >= CostCUp:
     CUp = CUp + CUp
     count = count - CostCUp
     CostCUp = 5*CostCUp
-    Ppc = Ppc * Ppc2
-    Ppc2 = Ppc2 + Ppc2
+    Ppc2 = Ppc2 + Ppc2 
     ClickUP.config(text=f"Upgrade Clicks: + {CUp} per click     Price: {round(CostC)}")
     ClickUpgrade.config(text=f"Double Click Power:     Price: {(CostCUp)}")
+    label4.configure(text=f"{Ppc * Ppc2} per click")
     updatelabel()
     
 def updatelabel():
-  global Ppc3
+  global Ppc
+  global Ppc2
   global Pps
   global count
   label.configure(text=f'Points: {round(count)}')
   label2.configure(text=f'Click Upgrades')
   label3.configure(text=f'Auto Upgrades')
-  label4.configure(text=f'{Ppc3} per click')
+  label4.configure(text=f'{Ppc * Ppc2} per click')
   label5.configure(text=f'{Pps} per second')
   label6.configure(text=f'Click Multipliers')
-  
-##my name jeff
-#he be lying
 
 windows.title("Idle Game")
 label = tkinter.Label(windows)
