@@ -18,7 +18,7 @@ CostC = 10
 CUp = 1
 CostCUp = 100
 Ppc = 1
-Ppc2 = 1
+Ppc2 = 1 
 Ppc3 = 1
 Pps = 0
 current_tick = 0
@@ -40,7 +40,7 @@ def clicked(event):
   global ClickP
   global Ppc3
   count = count + Ppc3
-  label.configure(text=f'Points: {round(count)}')
+  ##label.configure(text=f'Points: {round(count)}')
 
 def upgradeA(event):
   global automatic
@@ -114,7 +114,7 @@ def timemanager(time_type):
     return True
   elif time_type == "second":
     return False
-  if goal_time <= curr_time:
+  if goal_time <= curr_time and time_type == "tick":
     tick = tick + 1
     goal_time = curr_time + (100/6)
     return True
