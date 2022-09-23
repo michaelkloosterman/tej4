@@ -27,6 +27,7 @@ epoch = time.asctime(obj)
 curr_time = round(time.time()*1000)
 tick = 0
 sec = 0
+required_tick_1 = tick + 1 # used for button gif
 if True:
   obj = time.gmtime(0)
   epoch = time.asctime(obj)
@@ -41,6 +42,8 @@ def clicked(event):
   global Ppc3
   count = count + Ppc3
   label.configure(text=f'Points: {round(count)}')
+  button.config(image=button_frames[2])
+  animation_button_1(False)
 
 def upgradeA(event):
   global automatic
@@ -97,6 +100,17 @@ def upgradeC(event):
     label.configure(text=f'Upgrade too expensive')
     label.configure(text=f'Points: {round(count)}') 
 
+def animation_button_1(main):
+  global button_frames
+  global tick
+  global required_tick_1
+  if main != True:
+    required_tick_1 = tick + 3
+    button.config(image=button_frames[2])
+  elif main == True:
+    if required_tick_1 == tick:
+      button.config(image=button_frames[0])
+
 def auto():
   global automatic
   global count
@@ -125,6 +139,7 @@ def timemanager(time_type):
  
 def system():
   if timemanager("tick") == True:
+    animation_button_1(True)
     label.configure(text=f'Points: {round(count)}')
     updatelabel()
     label5.configure(text=f'{Pps} per second')
@@ -179,7 +194,9 @@ label5 = tkinter.Label(windows)
 label5.grid(column=2, row=0)
 label6 = tkinter.Label(windows)
 label6.grid(column=0, row=5)
-button = tkinter.ttk.Button(windows, text="Click on me")
+button_frames = [PhotoImage(file='b.gif',format = 'gif -index %i' %(i)) for i in range(3)]
+button = tkinter.ttk.Button(windows, image=button_frames[0])
+button.config(image=button_frames[2])
 button.bind("<Button-1>", clicked)
 button.grid(column=0, row=1)
 AutoUP = tkinter.ttk.Button(windows, text=f'Auto Collector: + {AUp} per second     Price: {round(CostA)}')
