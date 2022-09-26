@@ -58,7 +58,6 @@ def upgradeA(event):
     label.configure(text=f'Points: {round(count)}')
     AutoUP.config(text=f"Auto Collector: + {AUp} per second     Price: {round(CostA)}")
   else:
-    label.configure(text=f'Upgrade too expensive')
     label.configure(text=f'Points: {round(count)}')
 
 def upgradeA2(event):
@@ -77,7 +76,6 @@ def upgradeA2(event):
     label.configure(text=f'Points: {round(count)}')
     AdvancedUP.config(text=f"Advanced Collector: + {A2Up} per second     Price: {round(CostA2)}")
   else:
-    label.configure(text=f'Upgrade too expensive')
     label.configure(text=f'Points: {round(count)}')
 
 def upgradeC(event):
@@ -97,7 +95,7 @@ def upgradeC(event):
     ##label.configure(text=f'Points: {round(count)}')
     ClickUP.config(text=f"Upgrade Clicks: + {CUp} per click     Price: {round(CostC)}")
   else:
-    label.configure(text=f'Upgrade too expensive') 
+    ClickUP.config(text=f"Upgrade Clicks: + {CUp} per click     Price: {round(CostC)}")
 
 def auto():
   global automatic
@@ -176,9 +174,8 @@ def advancedpower(event):
     CostA2Up = 5*CostA2Up
     P2ps2 = P2ps2*2
     AdvancedUP.config(text=f"Advanced Collector: + {A2Up} per second     Price: {round(CostA2)}")
-    AutoUpgrade.config(text=f"Double Advanced Collecter:     Price: {(CostA2Up)}")
+    AdvancedUpgrade.config(text=f"Double Advanced Collecter:     Price: {(CostA2Up)}")
     updatelabel()
-
 
 def updatelabel():
   global Ppc
@@ -196,8 +193,6 @@ def updatelabel():
 windows.title("Idle Game")
 label = tkinter.Label(windows)
 label.grid(column=0, row=0)
-label1 = tkinter.Label(windows)
-label1.grid(column=2, row=0)
 label2 = tkinter.Label(windows)
 label2.grid(column=0, row=2)
 label3 = tkinter.Label(windows)
