@@ -1,4 +1,5 @@
 gifdir = "./"
+from argparse import _ArgumentGroup
 import tkinter
 from tkinter import ttk
 from tkinter import *
@@ -43,11 +44,12 @@ def clicked(event):
   global Ppc2
   global Ppc
   count = count + Ppc * Ppc2
-  label.configure(text=f'Points: {round(count)}')
 
 def upgradeA(event):
   global automatic
   global count
+  global label
+  global AutoUP
   global CostA
   global Pps
   if count >= CostA:
@@ -55,14 +57,13 @@ def upgradeA(event):
     Pps = Pps + 1
     count = count - CostA
     CostA = CostA + (2*CostA/3)
-    label.configure(text=f'Points: {round(count)}')
+    
     AutoUP.config(text=f"Auto Collector: + {AUp} per second     Price: {round(CostA)}")
-  else:
-    label.configure(text=f'Upgrade too expensive')
-    label.configure(text=f'Points: {round(count)}')
+  
 
 def upgradeA2(event):
   global automatic2 
+  global AdvancedUP
   global count
   global CostA2
   global Pps
@@ -74,15 +75,14 @@ def upgradeA2(event):
     P2ps = P2ps + 5
     count = count - CostA2
     CostA2 = CostA2 + (2*CostA2/3)
-    label.configure(text=f'Points: {round(count)}')
     AdvancedUP.config(text=f"Advanced Collector: + {A2Up} per second     Price: {round(CostA2)}")
-  else:
-    label.configure(text=f'Upgrade too expensive')
-    label.configure(text=f'Points: {round(count)}')
+  
+    
+    
 
 def upgradeC(event):
   global count
-  global ClickUp
+  global ClickUP
   global ClickP
   global CostC
   global Ppc
@@ -123,7 +123,7 @@ def timemanager(time_type):
     return True
   else:
     return False
-def motion(event):
+##def motion(event):
   ##global X,Y
 
   ##X, Y = event.x,event.y
@@ -132,6 +132,7 @@ def motion(event):
 
 def mouse_pos():
   global X,Y
+  print (X,Y)
   
 
 def system():
