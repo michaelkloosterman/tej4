@@ -126,15 +126,12 @@ def timemanager(time_type):
 def motion(event):
   ##global X,Y
 
-  X,Y = event.x,event.y
+  ##X, Y = event.x,event.y
 
-  print('{},{}'.format(X, Y))
+  ##print('{},{}'.format(X, Y))
 
 def mouse_pos():
   global X,Y
-  
-  ##if X,Y == 
-
   
 
 def system():
@@ -243,7 +240,7 @@ AutoUpgrade.grid(column=1, row=6)
 AdvancedUpgrade = tkinter.ttk.Button(windows, text=f'Double Advanced Collector:     Price: {(CostA2Up)}')
 AdvancedUpgrade.bind("<Button-1>", advancedpower)
 AdvancedUpgrade.grid(column=1, row=7)
-windows.bind("<Motion>",motion)
+##windows.bind('<Motion>',motion)
 while True:
   system()
   windows.update_idletasks()
