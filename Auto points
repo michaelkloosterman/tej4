@@ -6,6 +6,7 @@ import time
 windows = tkinter.Tk()
 count = 0
 automatic = 0
+automatic = 0
 ClickUp = 0 #Times upgraded (Ppc)
 ClickP = 1 #
 CostA = 15 #Cost of Auto Collecter
@@ -59,7 +60,7 @@ def upgradeA(event):
     label.configure(text=f'Points: {round(count)}')
 
 def upgradeA2(event):
-  global automatic
+  global automatic2 
   global count
   global CostA2
   global Pps
@@ -96,8 +97,9 @@ def upgradeC(event):
 
 def auto():
   global automatic
+  global automatic2
   global count
-  count = count + (automatic * Pps2)
+  count = count + (automatic * Pps2) + (automatic2)
 
 def timemanager(time_type):
   global tick
@@ -122,7 +124,6 @@ def system():
   if timemanager("tick") == True:
     updatelabel()
     ##label.configure(text=f'Points: {round(count)}')
-    updatelabel()
     ##label5.configure(text=f'{Pps} per second')
 
   if timemanager("second") == True:
