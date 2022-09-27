@@ -60,10 +60,11 @@ def upgradeA(event):
     
     AutoUP.config(text=f"Auto Collector: + {AUp} per second     Price: {round(CostA)}")
   else:
-    label.configure(text=f'Points: {round(count)}')  
+    label.configure(text=f'Points: {round(count)}')
+  
 
 def upgradeA2(event):
-  global automatic2 
+  global automatic 
   global AdvancedUP
   global count
   global CostA2
@@ -72,14 +73,12 @@ def upgradeA2(event):
   global P2ps
   global P2ps2
   if count >= CostA2:
-    automatic = automatic + 5
+    automatic = automatic + P2ps
     P2ps = P2ps + 5
     count = count - CostA2
     CostA2 = CostA2 + (2*CostA2/3)
     AdvancedUP.config(text=f"Advanced Collector: + {A2Up} per second     Price: {round(CostA2)}")
-  else:
-    label.configure(text=f'Points: {round(count)}')
-
+  
 def upgradeC(event):
   global count
   global ClickUp
@@ -123,10 +122,8 @@ def timemanager(time_type):
     return True
   else:
     return False
-def mouse_pos():
-  global X,Y
-  print (X,Y)
   
+
 def system():
   if timemanager("tick") == True:
     updatelabel()

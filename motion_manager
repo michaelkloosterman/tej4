@@ -1,0 +1,9 @@
+#import Auto_points
+
+
+
+def mouse_collision(X,Y,obj_lbl):
+  if X,Y == windows.ClickUP.winfo_rootx(), windows.ClickUP.winfo_rooty():
+    print("you are hovering over the upgrade button")
+  
+windows.bind('<Motion>',motion)
