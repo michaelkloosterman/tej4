@@ -62,7 +62,7 @@ def upgradeA(event):
   
 
 def upgradeA2(event):
-  global automatic2 
+  global automatic 
   global AdvancedUP
   global count
   global CostA2
@@ -71,18 +71,15 @@ def upgradeA2(event):
   global P2ps
   global P2ps2
   if count >= CostA2:
-    automatic = automatic + 5
+    automatic = automatic + P2ps
     P2ps = P2ps + 5
     count = count - CostA2
     CostA2 = CostA2 + (2*CostA2/3)
     AdvancedUP.config(text=f"Advanced Collector: + {A2Up} per second     Price: {round(CostA2)}")
   
-    
-    
-
 def upgradeC(event):
   global count
-  global ClickUP
+  global ClickUp
   global ClickP
   global CostC
   global Ppc
@@ -123,16 +120,6 @@ def timemanager(time_type):
     return True
   else:
     return False
-##def motion(event):
-  ##global X,Y
-
-  ##X, Y = event.x,event.y
-
-  ##print('{},{}'.format(X, Y))
-
-def mouse_pos():
-  global X,Y
-  print (X,Y)
   
 
 def system():
@@ -241,7 +228,6 @@ AutoUpgrade.grid(column=1, row=6)
 AdvancedUpgrade = tkinter.ttk.Button(windows, text=f'Double Advanced Collector:     Price: {(CostA2Up)}')
 AdvancedUpgrade.bind("<Button-1>", advancedpower)
 AdvancedUpgrade.grid(column=1, row=7)
-##windows.bind('<Motion>',motion)
 while True:
   system()
   windows.update_idletasks()
