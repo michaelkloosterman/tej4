@@ -5,24 +5,27 @@ from tkinter import *
 import time
 windows = tkinter.Tk()
 windows.title("Idle Game")
-windows.geometry('500x500')
+windows.geometry('550x300')
 count = 0
 automatic = 0
-ClickUp = 0
-ClickP = 1
-CostA = 15
-AUp = 1
-CostAUp = 100
-CostA2 = 100
-CostA2Up = 1000
-A2Up = 5
-CostC = 10
-CUp = 1
-CostCUp = 100
-Ppc = 1
-Ppc2 = 1
-Ppc3 = 1
-Pps = 0
+automatic2 = 0
+ClickUp = 0 #Times upgraded (Ppc)
+ClickP = 1 #
+CostA = 15 #Cost of Auto Collecter
+CostA2 = 100 #Cost of Advanced Collecter
+AUp = 1 #Multipler (Auto Collecter)
+A2Up = 5 #Multiplier (Advanced Collecter)
+CostAUp = 150 #Cost of Auto Colecter Multiplier
+CostA2Up = 1000 #Cost of Advanced Collecter Multiplier
+CostC = 10 #Cost of Upgrade Clicks
+CUp = 1 #Times Upgraded
+CostCUp = 100 #Cost of Click Multiplier
+Ppc = 1 #Base amount (Clicks)
+Ppc2 = 1 #Multiplier (Clicks)
+Pps = 0 #Base Amount (Auto)
+Pps2 = 1 #Multiplier (Auto)
+P2ps = 0 #Base amount (Advanced)
+P2ps2 = 1 #Multiplier (Advanced)
 current_tick = 0
 obj = time.gmtime(0)
 epoch = time.asctime(obj)
@@ -36,27 +39,28 @@ if True:
   curr_time = round(time.time()*1000)
   goal_time = curr_time + 35
   goal_time_sec = curr_time + 1000
+
 rows = 0
 while rows < 50:
-  windows.rowconfigure(rows, weight=1)
-  windows.columnconfigure(rows, weight=1)
-  rows += 1
-
+ windows.rowconfigure(rows, weight=1)
+ windows.columnconfigure(rows, weight=1)
+ rows += 1
+ 
 nb = ttk.Notebook(windows)
 nb.grid(row=1, column=0, columnspan=50, rowspan=49, sticky='NESW')
-
+ 
 page1 = ttk.Notebook(windows)
 nb.add(page1, text='The Button')
-
+ 
 page2 = ttk.Notebook(windows)
 nb.add(page2, text='Upgrades')
 
 def clicked(event):
   global count
   global ClickUp
-  global ClickP
-  global Ppc3
-  count = count + Ppc3
+  global Ppc2
+  global Ppc
+  count = count + Ppc * Ppc2
   label.configure(text=f'Points: {round(count)}')
   button.config(image=button_frames[2])
   animation_button_1(False)
@@ -74,7 +78,6 @@ def upgradeA(event):
     label.configure(text=f'Points: {round(count)}')
     AutoUP.config(text=f"Auto Collector: + {AUp} per second     Price: {round(CostA)}")
   else:
-    label.configure(text=f'Upgrade too expensive')
     label.configure(text=f'Points: {round(count)}')
 
 def upgradeA2(event):
@@ -82,16 +85,17 @@ def upgradeA2(event):
   global count
   global CostA2
   global Pps
+  global Pps2
+  global P2ps
+  global P2ps2
   if count >= CostA2:
-    automatic = automatic + 5
-    Pps = Pps + 5
+    P2ps = P2ps + 5
+    automatic = automatic + P2ps
     count = count - CostA2
     CostA2 = CostA2 + (2*CostA2/3)
     label.configure(text=f'Points: {round(count)}')
-    AutoUPUP.config(text=f"Advanced Collector: + {A2Up} per second     Price: {round(CostA2)}")
-    label5.configure(text=f'{Pps} per second')
+    AdvancedUP.config(text=f"Advanced Collector: + {A2Up} per second     Price: {round(CostA2)}")
   else:
-    label.configure(text=f'Upgrade too expensive')
     label.configure(text=f'Points: {round(count)}')
 
 def upgradeC(event):
@@ -101,19 +105,16 @@ def upgradeC(event):
   global CostC
   global Ppc
   global Ppc2
-  global Ppc3
   global CUp
   if count >= CostC:
     ClickP = ClickP + ClickUp
     ClickUp = ClickP * CUp
     Ppc = Ppc + 1
-    Ppc3 = Ppc * Ppc2 
     count = count - round(CostC)
     CostC = CostC + (2*CostC/3)
     ##label.configure(text=f'Points: {round(count)}')
     ClickUP.config(text=f"Upgrade Clicks: + {CUp} per click     Price: {round(CostC)}")
   else:
-    label.configure(text=f'Upgrade too expensive')
     label.configure(text=f'Points: {round(count)}') 
 
 def animation_button_1(main):
@@ -129,8 +130,9 @@ def animation_button_1(main):
 
 def auto():
   global automatic
+  global automatic2
   global count
-  count = count + automatic
+  count = count + (automatic * Pps2) + (automatic2 *P2ps2)
 
 def timemanager(time_type):
   global tick
@@ -144,85 +146,133 @@ def timemanager(time_type):
     return True
   elif time_type == "second":
     return False
-  if goal_time <= curr_time:
+  if goal_time <= curr_time and time_type == "tick":
     tick = tick + 1
     goal_time = curr_time + (100/6)
     return True
   else:
     return False
- 
+#def motion(event):
+  ##global X,Y
+
+  ##X, Y = event.x,event.y
+
+  ##print('{},{}'.format(X, Y))
+
+#def mouse_pos():
+  #global X,Y
+  
+
 def system():
   if timemanager("tick") == True:
     animation_button_1(True)
     label.configure(text=f'Points: {round(count)}')
     updatelabel()
+
+    ##label.configure(text=f'Points: {round(count)}')
     ##label5.configure(text=f'{Pps} per second')
 
   if timemanager("second") == True:
     auto()
-    
-                
+                 
 def clickpower(event):
   global count
   global CUp
   global CostCUp
   global Ppc
   global Ppc2
-  global Ppc3
   if count >= CostCUp:
     CUp = CUp + CUp
     count = count - CostCUp
     CostCUp = 5*CostCUp
-    Ppc = Ppc * Ppc2
-    Ppc2 = Ppc2 + Ppc2
+    Ppc2 = Ppc2*2 
     ClickUP.config(text=f"Upgrade Clicks: + {CUp} per click     Price: {round(CostC)}")
     ClickUpgrade.config(text=f"Double Click Power:     Price: {(CostCUp)}")
-    ##updatelabel()
-    
+    label4.configure(text=f"{Ppc * Ppc2} per click")
+    updatelabel()
+
+def autopower(event):
+  global count
+  global AUp
+  global CostAUp
+  global Pps
+  global Pps2
+  if count >= CostAUp:
+    AUp = AUp + AUp
+    count = count - CostAUp
+    CostAUp = 5*CostAUp
+    Pps2 = Pps2*2
+    AutoUP.config(text=f"Auto Collector: + {AUp} per second     Price: {round(CostA)}")
+    AutoUpgrade.config(text=f"Double Auto Collecter:     Price: {(CostAUp)}")
+    updatelabel()
+
+def advancedpower(event):
+  global count
+  global A2Up
+  global CostA2Up
+  global P2ps
+  global P2ps2
+  if count >= CostA2Up:
+    A2Up = A2Up + A2Up
+    count = count - CostA2Up
+    CostA2Up = 5*CostA2Up
+    P2ps2 = P2ps2*2
+    AdvancedUP.config(text=f"Advanced Collector: + {A2Up} per second     Price: {round(CostA2)}")
+    AdvancedUpgrade.config(text=f"Double Advanced Collecter:     Price: {(CostA2Up)}")
+    updatelabel()
+
+
 def updatelabel():
-  global Ppc3
+  global Ppc
+  global Ppc2
   global Pps
   global CUp
   global count
   label.configure(text=f'Points: {round(count)}')
   label2.configure(text=f'Click Upgrades')
   label3.configure(text=f'Auto Upgrades')
-  label4.configure(text=f'{Ppc3} per click')
-  label5.configure(text=f'{Pps} per second')
-  label6.configure(text=f'Click Multipliers')
-  
+  label4.configure(text=f'{Ppc * Ppc2} per click')
+  label5.configure(text=f'{Pps * Pps2 + P2ps * P2ps2} per second')
+  label6.configure(text=f'Multipliers')
 
 windows.title("Idle Game")
 label = tkinter.Label(windows)
 label.grid(column=0, row=0)
-label2 = tkinter.Label(windows)
+label2 = tkinter.Label(page2)
 label2.grid(column=0, row=2)
-label3 = tkinter.Label(windows)
+label3 = tkinter.Label(page2)
 label3.grid(column=0, row=3)
 label4 = tkinter.Label(windows)
 label4.grid(column=1, row=0)
 label5 = tkinter.Label(windows)
 label5.grid(column=2, row=0)
-label6 = tkinter.Label(windows)
+label6 = tkinter.Label(page2)
 label6.grid(column=0, row=5)
-button_frames = [PhotoImage(file='b.gif',format = 'gif -index %i' %(i)) for i in range(3)]
-button = tkinter.ttk.Button(windows, image=button_frames[0])
+button_frames = [PhotoImage(file='b.gif',format = 'gif -index %i' %(i), width=5000, height=5000) for i in range(3)]
+button = tkinter.ttk.Button(page1, image=button_frames[0])
 button.config(image=button_frames[2])
-button.bind("<Button-1>", clicked)
 button.grid(column=0, row=1)
-AutoUP = tkinter.ttk.Button(windows, text=f'Auto Collector: + {AUp} per second     Price: {round(CostA)}')
-AutoUP.bind("<Button-1>", upgradeA)
-AutoUP.grid(column=1, row=3)
-AutoUPUP = tkinter.ttk.Button(windows, text=f'Adavnced Collector: + {A2Up} per second     Price: {round(CostA2)}')
-AutoUPUP.bind("<Button-1>", upgradeA2)
-AutoUPUP.grid(column=1, row=4)
-ClickUP = tkinter.ttk.Button(windows, text=f'Upgrade Clicks: + {CUp} per click     Price: {round(CostC)}')
+button.config
+button.bind("<Button-1>", clicked)
+ClickUP = tkinter.ttk.Button(page2, text=f'Upgrade Clicks: + {CUp} per click     Price: {round(CostC)}')
 ClickUP.bind("<Button-1>", upgradeC)
 ClickUP.grid(column=1, row=2)
-ClickUpgrade = tkinter.ttk.Button(windows, text=f'Double Click Power:     Price: {(CostCUp)}')
+AutoUP = tkinter.ttk.Button(page2, text=f'Auto Collector: + {AUp} per second     Price: {round(CostA)}')
+AutoUP.bind("<Button-1>", upgradeA)
+AutoUP.grid(column=1, row=3)
+AdvancedUP = tkinter.ttk.Button(page2, text=f'Adavnced Collector: + {A2Up} per second     Price: {round(CostA2)}')
+AdvancedUP.bind("<Button-1>", upgradeA2)
+AdvancedUP.grid(column=1, row=4)
+ClickUpgrade = tkinter.ttk.Button(page2, text=f'Double Click Power:     Price: {(CostCUp)}')
 ClickUpgrade.bind("<Button-1>", clickpower)
 ClickUpgrade.grid(column=1, row=5)
-
+AutoUpgrade = tkinter.ttk.Button(page2, text=f'Double Auto Collector:     Price: {(CostAUp)}')
+AutoUpgrade.bind("<Button-1>", autopower)
+AutoUpgrade.grid(column=1, row=6)
+AdvancedUpgrade = tkinter.ttk.Button(page2, text=f'Double Advanced Collector:     Price: {(CostA2Up)}')
+AdvancedUpgrade.bind("<Button-1>", advancedpower)
+AdvancedUpgrade.grid(column=1, row=7)
+##windows.bind('<Motion>',motion)
 while True:
   system()
   windows.update_idletasks()
