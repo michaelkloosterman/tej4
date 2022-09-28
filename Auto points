@@ -245,7 +245,7 @@ label5 = tkinter.Label(windows)
 label5.grid(column=2, row=0)
 label6 = tkinter.Label(page2)
 label6.grid(column=0, row=5)
-button_frames = [PhotoImage(file='b.gif',format = 'gif -index %i' %(i)) for i in range(3)]
+button_frames = [PhotoImage(file='button.gif',format = 'gif -index %i' %(i)) for i in range(3)]
 button = tkinter.ttk.Button(page1, image=button_frames[0])
 button.config(image=button_frames[2])
 
