@@ -7,6 +7,8 @@ import time
 windows = tkinter.Tk()
 windows.title("Idle Game")
 windows.geometry('550x300')
+screen_width = windows.winfo_width()
+screen_height = windows.winfo_height()
 count = 0
 automatic = 0
 automatic2 = 0
@@ -49,6 +51,7 @@ while rows < 50:
  
 nb = ttk.Notebook(windows)
 nb.grid(row=1, column=0, columnspan=50, rowspan=49, sticky='NESW')
+##nb.geometry(530, 300) 
 page1 = ttk.Notebook(windows)
 nb.add(page1, text='The Button')
 page2 = ttk.Notebook(windows)
@@ -160,7 +163,9 @@ def system():
     animation_button_1(True)
     point_count.configure(text=f'Points: {round(count)}')
     updatelabel()
-
+    screen_width = windows.winfo_width()
+    screen_height = windows.winfo_height()
+    button.place(x=((screen_width/2)-55),y=((screen_height/2)-75))
     ##point_count.configure(text=f'Points: {round(count)}')
     ##label5.configure(text=f'{Pps} per second')
 
@@ -243,8 +248,8 @@ label6.grid(column=0, row=5)
 button_frames = [PhotoImage(file='button.gif',format = 'gif -index %i' %(i)) for i in range(3)]
 button = tkinter.ttk.Button(page1, image=button_frames[0])
 button.config(image=button_frames[2])
-button.place(x=200,y=50)
-button.visible = FALSE
+
+button.place(x=(screen_width/2),y=(screen_height/2))
 button.bind("<Button-1>", clicked)
 ClickUP = tkinter.ttk.Button(page2, text=f'Upgrade Clicks: + {CUp} per click     Price: {round(CostC)}')
 ClickUP.bind("<Button-1>", upgradeC)
@@ -268,3 +273,4 @@ while True:
   system()
   windows.update_idletasks()
   windows.update()
+  

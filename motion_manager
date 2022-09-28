@@ -1,9 +1,21 @@
-#import Auto_points
+from tkinter import *
+
+#Create an instance of tkinter frame
+win= Tk()
+
+#Set the geometry of frame
+win.geometry("650x250")
 
 
+def system():
+  #Get the current screen width and height
+  screen_width = win.winfo_width()
+  screen_height = win.winfo_height()
+  print("Screen width:", screen_width)
+  print("Screen height:", screen_height)
 
-def mouse_collision(X,Y,obj_lbl):
-  if X,Y == windows.ClickUP.winfo_rootx(), windows.ClickUP.winfo_rooty():
-    print("you are hovering over the upgrade button")
-  
-windows.bind('<Motion>',motion)
+
+while True:
+  system()
+  win.update_idletasks()
+  win.update()
