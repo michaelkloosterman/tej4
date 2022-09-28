@@ -49,7 +49,6 @@ while rows < 50:
  
 nb = ttk.Notebook(windows)
 nb.grid(row=1, column=0, columnspan=50, rowspan=49, sticky='NESW')
-nb.geometry(530, 300) 
 page1 = ttk.Notebook(windows)
 nb.add(page1, text='The Button')
 page2 = ttk.Notebook(windows)
@@ -241,10 +240,10 @@ label5 = tkinter.Label(windows)
 label5.grid(column=2, row=0)
 label6 = tkinter.Label(page2)
 label6.grid(column=0, row=5)
-button_frames = [PhotoImage(file='b.gif',format = 'gif -index %i' %(i)) for i in range(3)]
+button_frames = [PhotoImage(file='button.gif',format = 'gif -index %i' %(i)) for i in range(3)]
 button = tkinter.ttk.Button(page1, image=button_frames[0])
 button.config(image=button_frames[2])
-button.place(x=1,y=150)
+button.place(x=200,y=50)
 button.bind("<Button-1>", clicked)
 ClickUP = tkinter.ttk.Button(page2, text=f'Upgrade Clicks: + {CUp} per click     Price: {round(CostC)}')
 ClickUP.bind("<Button-1>", upgradeC)
