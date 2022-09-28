@@ -82,7 +82,7 @@ def upgradeA(event):
     point_count.configure(text=f'Points: {round(count)}')  
 
 def upgradeA2(event):
-  global automatic2 
+  global automatic
   global AdvancedUP
   global count
   global CostA2
@@ -220,11 +220,11 @@ def updatelabel():
   global CUp
   global count
   point_count.configure(text=f'Points: {round(count)}')
-  label2.configure(text=f'Click Upgrades')
-  label3.configure(text=f'Auto Upgrades')
+  #label2.configure(text=f' ')
+  #label3.configure(text=f' ')
   label4.configure(text=f'{Ppc * Ppc2} per click')
   label5.configure(text=f'{Pps * Pps2 + P2ps * P2ps2} per second')
-  label6.configure(text=f'Multipliers')
+  #label6.configure(text=f' ')
 
 
 windows.title("Idle Game")
@@ -244,6 +244,7 @@ button_frames = [PhotoImage(file='button.gif',format = 'gif -index %i' %(i)) for
 button = tkinter.ttk.Button(page1, image=button_frames[0])
 button.config(image=button_frames[2])
 button.place(x=200,y=50)
+button.visible = FALSE
 button.bind("<Button-1>", clicked)
 ClickUP = tkinter.ttk.Button(page2, text=f'Upgrade Clicks: + {CUp} per click     Price: {round(CostC)}')
 ClickUP.bind("<Button-1>", upgradeC)
