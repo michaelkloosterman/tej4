@@ -1,0 +1,39 @@
+import tkinter
+from tkinter import ttk
+from tkinter import *
+import time
+
+windows = tkinter.Tk()
+windows.title("Idle Game")
+windows.geometry('500x500')
+
+rows = 0
+while rows < 50:
+  windows.rowconfigure(rows, weight=1)
+  windows.columnconfigure(rows, weight=1)
+  rows += 1
+
+nb = ttk.Notebook(windows)
+nb.grid(row=1, column=0, columnspan=50, rowspan=49, sticky='NESW')
+
+page1 = ttk.Notebook(windows)
+nb.add(page1, text='The Button')
+
+page2 = ttk.Notebook(windows)
+nb.add(page2, text='Upgrades')
+
+
+label = Label(page1,text="Welcome in Delftstack")
+label.grid(column=1,
+           row=1,
+           padx=40,
+           pady=40)
+           
+
+label2nd = Label(page2, text="Now we are able to see another tab")
+label2nd.grid(column=1,
+            row=1,
+            padx=40,
+            pady=40)
+
+windows.mainloop()
