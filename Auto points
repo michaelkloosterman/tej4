@@ -227,16 +227,25 @@ def updatelabel():
   global CUp
   global count
   point_count.configure(text=f'Points: {round(count)}')
-  #label2.configure(text=f' ')
-  #label3.configure(text=f' ')
   label4.configure(text=f'{Ppc * Ppc2} per click')
   label5.configure(text=f'{Pps * Pps2 + P2ps * P2ps2} per second')
-  #label6.configure(text=f' ')
+  
+def updatescreen():
+  screen_width = windows.winfo_width()
+  screen_height = windows.winfo_height()
+  button.place(x=((screen_width/2)-55),y=((screen_height/2)-75))
+  if False:
+    AutoUP.place(x=((screen_width/2))-55,y=(50))
+    ClickUP.place(x=((screen_width/2))-55,y=(0))
+    AdvancedUP.place(x=((screen_width/2))-55,y=75)
+    ClickUpgrade.place(x=((screen_width/2))-55,y=150)
+    AutoUpgrade.place(x=((screen_width/2))-55,y=200)
+    AdvancedUpgrade.place(x=((screen_width/2))-55,y=100)
 
 
 windows.title("Idle Game")
 point_count = tkinter.Label(windows)
-point_count.grid(column=1, row=0)
+point_count.grid(column=0, row=0)
 label2 = tkinter.Label(page2)
 label2.grid(column=1, row=2)
 label3 = tkinter.Label(page2)
