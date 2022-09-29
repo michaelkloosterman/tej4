@@ -85,7 +85,7 @@ def upgradeA(event):
     point_count.configure(text=f'Points: {round(count)}')  
 
 def upgradeA2(event):
-  global automatic
+  global automatic2
   global AdvancedUP
   global count
   global CostA2
@@ -95,7 +95,7 @@ def upgradeA2(event):
   global P2ps2
   if count >= CostA2:
     P2ps = P2ps + 5
-    automatic = automatic + P2ps
+    automatic2 = automatic2 + P2ps
     count = count - CostA2
     CostA2 = CostA2 + (2*CostA2/3)
     AdvancedUP.config(text=f"Advanced Collector: + {A2Up} per second     Price: {round(CostA2)}")
@@ -136,7 +136,11 @@ def auto():
   global automatic
   global automatic2
   global count
-  count = count + (automatic * Pps2) + (automatic2 *P2ps2)
+  global Pps
+  global Pps2
+  global P2ps
+  global P2ps2
+  count = count + ((Pps*Pps2) + (P2ps*P2ps2))
 
 def timemanager(time_type):
   global tick
