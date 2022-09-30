@@ -95,6 +95,8 @@ def upgradeA2(event):
   global AdvancedPps
   if count >= CostA2:
     AdvancedPps = AdvancedPps + (1 * A2Up)
+    P2ps = P2ps + 1
+    automatic = automatic + P2ps
     count = count - CostA2
     CostA2 = CostA2 + (2*CostA2/3)
     
@@ -281,3 +283,4 @@ while True:
   system()
   windows.update_idletasks()
   windows.update()
+  
