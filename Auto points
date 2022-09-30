@@ -283,4 +283,3 @@ while True:
   system()
   windows.update_idletasks()
   windows.update()
-  
