@@ -27,8 +27,7 @@ Ppc = 1 #Base amount (Clicks)
 Ppc2 = 1 #Multiplier (Clicks)
 Pps = 0 #Base Amount (Auto)
 Pps2 = 1 #Multiplier (Auto)
-P2ps = 0 #Base amount (Advanced)
-P2ps2 = 1 #Multiplier (Advanced)
+AdvancedPps = 0 #Base amount (Advanced)
 current_tick = 0
 obj = time.gmtime(0)
 epoch = time.asctime(obj)
@@ -73,10 +72,12 @@ def upgradeA(event):
   global point_count
   global AutoUP
   global CostA
+  global AUp
   global Pps
+  global Pps2
   if count >= CostA:
     automatic = automatic + 1
-    Pps = Pps + 1
+    Pps = Pps + (1 * (AUp))
     count = count - CostA
     CostA = CostA + (2*CostA/3)
     
@@ -86,21 +87,20 @@ def upgradeA(event):
 
 def upgradeA2(event):
   global automatic
-  global AdvancedUP
   global count
+  global point_count
+  global AdvancedUP
   global CostA2
-  global Pps
-  global Pps2
-  global P2ps
-  global P2ps2
+  global A2Up
+  global AdvancedPps
   if count >= CostA2:
-    P2ps = P2ps + 5
-    automatic = automatic + P2ps
+    AdvancedPps = AdvancedPps + (1 * A2Up)
     count = count - CostA2
     CostA2 = CostA2 + (2*CostA2/3)
+    
     AdvancedUP.config(text=f"Advanced Collector: + {A2Up} per second     Price: {round(CostA2)}")
   else:
-    point_count.configure(text=f'Points: {round(count)}')
+    point_count.configure(text=f'Points: {round(count)}') 
 
 def upgradeC(event):
   global count
@@ -134,10 +134,9 @@ def animation_button_1(main):
 
 def auto():
   global automatic
-  global Pps
-  global P2ps
+  global automatic
   global count
-  count = count + (Pps) + (P2ps)
+  count = count + (Pps) + (AdvancedPps)
 
 def timemanager(time_type):
   global tick
@@ -192,13 +191,11 @@ def autopower(event):
   global AUp
   global CostAUp
   global Pps
-  global Pps2
   if count >= CostAUp:
     AUp = AUp + AUp
     count = count - CostAUp
     CostAUp = 5*CostAUp
-    Pps = Pps*Pps2
-    Pps2 = Pps2*2
+    Pps = Pps+Pps
     AutoUP.config(text=f"Auto Collector: + {AUp} per second     Price: {round(CostA)}")
     AutoUpgrade.config(text=f"Double Auto Collecter:     Price: {(CostAUp)}")
     updatelabel()
@@ -207,14 +204,12 @@ def advancedpower(event):
   global count
   global A2Up
   global CostA2Up
-  global P2ps
-  global P2ps2
+  global AdvancedPps
   if count >= CostA2Up:
     A2Up = A2Up + A2Up
     count = count - CostA2Up
     CostA2Up = 5*CostA2Up
-    P2ps = P2ps*P2ps2
-    P2ps2 = P2ps2*2
+    AdvancedPps = AdvancedPps+AdvancedPps
     AdvancedUP.config(text=f"Advanced Collector: + {A2Up} per second     Price: {round(CostA2)}")
     AdvancedUpgrade.config(text=f"Double Advanced Collecter:     Price: {(CostA2Up)}")
     updatelabel()
@@ -223,11 +218,12 @@ def updatelabel():
   global Ppc
   global Ppc2
   global Pps
+  global AdvancedPps
   global CUp
   global count
   point_count.configure(text=f'Points: {round(count)}')
   label4.configure(text=f'{Ppc * Ppc2} per click')
-  label5.configure(text=f'{Pps + P2ps} per second')
+  label5.configure(text=f'{Pps + AdvancedPps} per second')
   
 def updatescreen():
   screen_width = windows.winfo_width()
