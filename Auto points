@@ -140,7 +140,7 @@ def auto():
   global Pps2
   global P2ps
   global P2ps2
-  count = count + ((Pps*Pps2) + (P2ps*P2ps2))
+  count = count + (Pps) + (P2ps)
 
 def timemanager(time_type):
   global tick
@@ -286,4 +286,3 @@ while True:
   system()
   windows.update_idletasks()
   windows.update()
-  
